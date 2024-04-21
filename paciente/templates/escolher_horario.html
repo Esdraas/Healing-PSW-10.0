@@ -45,7 +45,7 @@
                     
                     {% for data_aberta in datas_abertas %}
                         <div class="col-md-3">
-                            <a class="link" href="#">
+                            <a class="link" href="{% url 'agendar_horario' data_aberta.id %}">
                                 <div class='selecionar-dia'>
                                 <div class="header-dias">
                                     <span class="mes">
