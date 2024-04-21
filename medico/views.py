@@ -104,7 +104,7 @@ def consulta_area_medico(request, id_consulta):
     if request.method == "GET":
         consulta = Consulta.objects.get(id=id_consulta)
         return render(request, 'consulta_area_medico.html', {'consulta': consulta,'is_medico': is_medico(request.user)}) 
-        
+
     elif request.method == "POST":
 
         consulta = Consulta.objects.get(id=id_consulta)
@@ -123,3 +123,17 @@ def consulta_area_medico(request, id_consulta):
 
         messages.add_message(request, constants.SUCCESS, 'Consulta inicializada com sucesso.')
         return redirect(f'/medicos/consulta_area_medico/{id_consulta}')
+
+def finalizar_consulta(request, id_consulta):
+    if not is_medico(request.user):
+        messages.add_message(request, constants.WARNING, 'Somente médicos podem acessar essa página.')
+        return redirect('/usuarios/sair')
+
+    consulta = Consulta.objects.get(id=id_consulta)
+    if request.user != consulta.data_aberta.user:
+        messages.add_message(request, constants.ERROR, 'Você não tem permissão para finalizar essa consulta.')
+        return redirect(F'/medicos/consulta_area_medico/{id_consulta}')
+
+    consulta.status = 'F'
+    consulta.save()
+    return redirect(F'/medicos/consulta_area_medico/{id_consulta}')
