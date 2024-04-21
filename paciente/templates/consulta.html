@@ -68,20 +68,25 @@
                 {% if consulta.status == 'I' and consulta.link %}
 
                     <a href="{{consulta.link}}"  class="btn btn-success btn-dark-color btn-lg" >Acessar consulta</a>
-                    
+
                 {% else %}
 
                     <a href="#"  class="btn btn-success btn-dark-color btn-lg disabled" >Acessar consulta</a>
 
                 {% endif %}
-                
-                <a href="#" class="btn btn-success btn-dark-color btn-lg disabled" >Acessar consulta</a>
 
                 
                 <hr>
                 <h3 class="p-bold">Meus documentos</h3>
                 <br>
-    
+                
+                {% for documento in documentos %}
+                
+                <a href="{{documento.documento.url}}" class="link documentos"><i class="bi bi-file-arrow-down"></i> {{documento.titulo}} - {{documento.consulta.data_aberta.data.year}}</a>
+                <br> <br> <br>
+
+                {% endfor %}
+
                 <br>
                 <br>
                 <br>
